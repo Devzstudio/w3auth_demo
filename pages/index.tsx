@@ -12,7 +12,11 @@ export default function Home() {
 			</Head>
 
 			<main>
-				<DemoCard symbol={'ETH'} details="Integration using RainbowKit, Wagmi" />
+				<DemoCard
+					symbol={'ETH'}
+					details="Integration using RainbowKit, Wagmi"
+					code="https://github.com/Devzstudio/w3auth_demo/tree/main/components/eth"
+				/>
 
 				<ExampleCard />
 			</main>

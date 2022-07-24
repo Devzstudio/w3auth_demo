@@ -29,7 +29,11 @@ const useNonceHandler = ({ account }) => {
 				const verifyCall = await fetch(API_URL + '/api/auth/verify', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ signature: data, signed_message: variables.message }),
+					body: JSON.stringify({
+						signature: data,
+						signed_message: variables.message,
+						wallet_address: account.address,
+					}),
 				});
 
 				const user_response = await verifyCall.json();
@@ -41,12 +45,6 @@ const useNonceHandler = ({ account }) => {
 					window.localStorage.setItem('refresh_token', 'true');
 
 					setUserReponse(user_response);
-
-					if (router.query.redirect_to) {
-						router.push(router.query.redirect_to as string);
-					} else {
-						router.push('/dashboard');
-					}
 				}
 			} else {
 				processDisconnect();
@@ -62,7 +60,7 @@ const useNonceHandler = ({ account }) => {
 	 */
 
 	const handleSignature = useCallback(async () => {
-		if (account?.address && auth.token == '' && refreshFailed) {
+		if (account?.address && auth.token == null && refreshFailed) {
 			const nonceCall = await fetch(API_URL + '/api/auth/nonce', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -109,7 +107,7 @@ const useNonceHandler = ({ account }) => {
 	 */
 
 	const handleRefreshToken = useCallback(async () => {
-		if (auth.token == '') {
+		if (auth.token == null) {
 			const refreshToken = window.localStorage.getItem('refresh_token');
 
 			if (refreshToken) {
@@ -133,12 +131,6 @@ const useNonceHandler = ({ account }) => {
 					window.localStorage.setItem('refresh_token', 'true');
 
 					setUserReponse(user_response);
-
-					// if (router.query.redirect_to) {
-					//     router.push(router.query.redirect_to as string);
-					// } else {
-					//     router.push('/dashboard');
-					// }
 				}
 			} else {
 				setRefreshFailed(true);
@@ -158,7 +150,7 @@ const useNonceHandler = ({ account }) => {
 	}, [error, processDisconnect]);
 
 	useEffect(() => {
-		if (auth.token == '' && account?.address) {
+		if (auth.token == null && account?.address) {
 			handleSignature();
 		}
 	}, [refreshFailed]);

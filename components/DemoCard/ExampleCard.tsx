@@ -5,7 +5,9 @@ const ExampleCard = () => {
 	const { auth } = useAuth();
 	return (
 		<div className="grid md:grid-cols-2 gap-5 pt-10 pb-5 border px-5">
-			<RabbitKitConnect />
+			<div className="grid place-items-center">
+				<RabbitKitConnect />
+			</div>
 
 			<div>
 				<p className="text-gray-500 text-sm mb-2">Auth context</p>
