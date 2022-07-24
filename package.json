@@ -9,12 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.6",
+    "@rainbow-me/rainbowkit": "^0.4.4",
+    "autoprefixer": "^10.4.7",
+    "ethers": "^5.6.9",
     "next": "12.2.3",
+    "nextjs-cors": "^2.1.1",
+    "postcss": "^8.4.14",
+    "rainbowkit": "^0.0.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.3.0",
+    "tailwindcss": "^3.1.6",
+    "wagmi": "^0.5.11"
   },
   "devDependencies": {
+    "@types/react": "^18.0.15",
     "eslint": "8.20.0",
-    "eslint-config-next": "12.2.3"
+    "eslint-config-next": "12.2.3",
+    "typescript": "^4.7.4"
   }
 }
