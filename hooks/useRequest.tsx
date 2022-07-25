@@ -28,7 +28,7 @@ export const req = async (
 };
 
 // export const API_URL = 'http://localhost:3001';
-export const API_URL = 'https://w3auth.vercel.app';
+export const API_URL = 'https://w3authdemo.devzstudio.com';
 
 const useRequest = ({ url }) => {
 	const { auth } = useAuth();

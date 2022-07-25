@@ -21,13 +21,13 @@ const useNonceHandler = ({ account }) => {
 
 	const { data, error, isLoading, signMessage } = useSignMessage({
 		async onSuccess(data, variables) {
-			// Verify signature when sign message succeeds
 			const address = verifyMessage(variables.message, data);
 			recoveredAddress.current = address;
 
 			if (data != '') {
 				const verifyCall = await fetch(API_URL + '/api/auth/verify', {
 					method: 'POST',
+
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
 						signature: data,
@@ -63,6 +63,7 @@ const useNonceHandler = ({ account }) => {
 		if (account?.address && auth.token == null && refreshFailed) {
 			const nonceCall = await fetch(API_URL + '/api/auth/nonce', {
 				method: 'POST',
+
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ wallet_address: account.address }),
 			});
@@ -86,6 +87,7 @@ const useNonceHandler = ({ account }) => {
 		await fetch(API_URL + '/api/auth/logout', {
 			method: 'POST',
 			credentials: 'include',
+
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -114,11 +116,12 @@ const useNonceHandler = ({ account }) => {
 				const refreshCall = await fetch(API_URL + '/api/auth/refresh', {
 					method: 'POST',
 					credentials: 'include',
+
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ refresh_token: refreshToken }),
+					body: JSON.stringify({}),
 				});
 				setRefreshFailed(true);
 
