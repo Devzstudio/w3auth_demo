@@ -27,7 +27,7 @@ const useNonceHandler = ({ account }) => {
 			if (data != '') {
 				const verifyCall = await fetch(API_URL + '/api/auth/verify', {
 					method: 'POST',
-
+					credentials: 'include',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
 						signature: data,
@@ -63,7 +63,7 @@ const useNonceHandler = ({ account }) => {
 		if (account?.address && auth.token == null && refreshFailed) {
 			const nonceCall = await fetch(API_URL + '/api/auth/nonce', {
 				method: 'POST',
-
+				credentials: 'same-origin',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ wallet_address: account.address }),
 			});
