@@ -87,7 +87,6 @@ const useNonceHandler = ({ account }) => {
 		await fetch(API_URL + '/api/auth/logout', {
 			method: 'POST',
 			credentials: 'include',
-
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -116,7 +115,6 @@ const useNonceHandler = ({ account }) => {
 				const refreshCall = await fetch(API_URL + '/api/auth/refresh', {
 					method: 'POST',
 					credentials: 'include',
-
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
