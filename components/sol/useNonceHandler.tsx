@@ -1,6 +1,3 @@
-import { useSignMessage, useDisconnect } from 'wagmi';
-
-import { verifyMessage } from 'ethers/lib/utils';
 import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
@@ -9,25 +6,32 @@ import { AuthActionTypes, useAuth } from 'context/auth.context';
 import { API_URL } from 'hooks/useRequest';
 import toast from 'react-hot-toast';
 import w3auth from 'hooks/useW3auth';
+import { useSolana } from '@saberhq/use-solana';
 
 const useNonceHandler = ({ account }) => {
 	const recoveredAddress = React.useRef<string>();
 	const { verifySign, getNonce, logout, refresh } = w3auth(API_URL);
+	const { walletProviderInfo, disconnect, providerMut, network, setNetwork } = useSolana();
 
 	const [userResponse, setUserReponse] = useState(null);
 	const [refreshFailed, setRefreshFailed] = useState(false);
 
-	const { disconnect } = useDisconnect();
+	const { auth, authDispatch } = useAuth();
 
-	const { error, signMessage } = useSignMessage({
-		async onSuccess(data, variables) {
-			const address = verifyMessage(variables.message, data);
-			recoveredAddress.current = address;
+	const signMessage = useCallback(async (message) => {
+		if (account.address) {
+			if (!(window as any).solana) {
+				toast.error('Oops cannot sign message on solana.');
+			}
 
-			if (data != '') {
+			const signature = await (window as any).solana.signMessage(new TextEncoder().encode(message), 'utf8');
+
+			recoveredAddress.current = account.address;
+
+			if (signature != '') {
 				const user_response = await verifySign({
-					signature: data,
-					signed_message: variables.message,
+					signature: message,
+					signed_message: signature,
 					wallet_address: account.address,
 				});
 
@@ -42,10 +46,8 @@ const useNonceHandler = ({ account }) => {
 			} else {
 				processDisconnect();
 			}
-		},
-	});
-
-	const { auth, authDispatch } = useAuth();
+		}
+	}, []);
 
 	/*
 	 * Get nonce from backend , verify it with the signature and save to context
@@ -113,13 +115,6 @@ const useNonceHandler = ({ account }) => {
 	}, [handleRefreshToken]);
 
 	useEffect(() => {
-		if (error) {
-			toast.error('User rejected request');
-			processDisconnect();
-		}
-	}, [error, processDisconnect]);
-
-	useEffect(() => {
 		if (auth.token == null && account?.address) {
 			handleSignature();
 		}
@@ -134,7 +129,9 @@ const useNonceHandler = ({ account }) => {
 		}
 	}, [userResponse, authDispatch]);
 
-	return {};
+	return {
+		processDisconnect,
+	};
 };
 
 export default useNonceHandler;

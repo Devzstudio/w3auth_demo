@@ -9,8 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@gokiprotocol/walletkit": "^1.7.3",
     "@heroicons/react": "^1.0.6",
     "@rainbow-me/rainbowkit": "^0.4.4",
+    "@reach/dialog": "^0.17.0",
+    "@saberhq/use-solana": "^1.13.32",
     "@solana-mobile/wallet-adapter-mobile": "^0.0.1-alpha.7",
     "@solana/wallet-adapter-base": "^0.9.9",
     "@solana/wallet-adapter-react": "^0.15.8",

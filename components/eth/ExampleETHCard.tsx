@@ -1,7 +1,7 @@
 import RabbitKitConnect from 'components/eth/Rainbowkit';
 import { useAuth } from 'context/auth.context';
 
-const ExampleCard = () => {
+const ExampleETHCard = () => {
 	const { auth } = useAuth();
 	return (
 		<div className="grid md:grid-cols-2 gap-5 pt-10 pb-5 border px-5">
@@ -17,4 +17,4 @@ const ExampleCard = () => {
 	);
 };
 
-export default ExampleCard;
+export default ExampleETHCard;

@@ -3,7 +3,7 @@ const Layout = ({ children }) => {
 		<>
 			<header className="mx-auto max-w-screen-xl md:px-4 sm:px-6 relative">
 				<div className="flex justify-between items-center">
-					<h4 className="text-xl font-medium p-5">w3auth Demo Integration</h4>
+					<h4 className="text-xl font-medium py-5 pr-5">w3auth Demo Integration</h4>
 					<a
 						href="https://w3auth.devzstudio.com/"
 						target="_BLANK"
