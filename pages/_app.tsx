@@ -15,18 +15,18 @@ function MyApp({ Component, pageProps }) {
 		<AuthProvider>
 			<WagmiConfig client={wagmiClient}>
 				<RainbowKitProvider chains={chains}>
-					<WalletKitProvider
+					{/* <WalletKitProvider
 						defaultNetwork="devnet"
 						app={{
 							name: 'w3auth demo',
 							icon: <img src="https://goki.so/assets/android-chrome-256x256.png" alt="icon" />,
 						}}
 						debugMode={true} // you may want to set this in REACT_APP_DEBUG_MODE
-					>
-						<Layout>
-							<Component {...pageProps} />
-						</Layout>
-					</WalletKitProvider>
+					> */}
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+					{/* </WalletKitProvider> */}
 				</RainbowKitProvider>
 			</WagmiConfig>
 			<Toaster />

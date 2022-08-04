@@ -73,20 +73,40 @@ export default function Home() {
 				{activeTab == 'other' && (
 					<>
 						<div className="bg-gray-50 rounded-t p-5 border relative overflow-hidden ">
-							<p className="mb-5">
-								You can check ETH Sample Integration on{' '}
-								<a
-									href="https://github.com/Devzstudio/w3auth_demo"
-									target="_BLANK"
-									className="text-blue-500"
-								>
-									https://github.com/Devzstudio/w3auth_demo
-								</a>
-							</p>
+							<div className="mb-5 space-y-2">
+								<p>
+									You can check ETH Sample Integration on{' '}
+									<a
+										href="https://github.com/Devzstudio/w3auth_demo"
+										target="_BLANK"
+										rel="noreferrer noopener"
+										className="text-blue-500"
+									>
+										https://github.com/Devzstudio/w3auth_demo
+									</a>
+								</p>
+
+								<p>
+									If you are using reactjs front end, you can use this w3auth hook to call api
+									functions.
+									<a
+										href="https://github.com/Devzstudio/w3auth_demo/blob/main/hooks/useW3auth.tsx"
+										target="_BLANK"
+										rel="noreferrer noopener"
+										className="text-blue-500 ml-2"
+									>
+										w3auth hook
+									</a>
+								</p>
+							</div>
 
 							<h3 className="text-xl font-medium block mb-2">Other Chain</h3>
 
 							<p>You can integrate following blockchain in w3auth.</p>
+							<p>
+								It will be similar to the current integration, with a few changes to the sign message
+								part.
+							</p>
 
 							<b className="mt-5 block">Supported Chains</b>
 
@@ -102,6 +122,7 @@ export default function Home() {
 									className="text-blue-500 mr-2"
 									href="https://github.com/Devzstudio/w3auth/issues/new/choose"
 									target="_BLANK"
+									rel="noreferrer noopener"
 								>
 									Open an issue
 								</a>

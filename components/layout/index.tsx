@@ -6,7 +6,6 @@ const Layout = ({ children }) => {
 					<h4 className="text-xl font-medium py-5 pr-5">w3auth Demo Integration</h4>
 					<a
 						href="https://w3auth.devzstudio.com/"
-						target="_BLANK"
 						rel="noreferrer noopener"
 						className="text-gray-500 hover:text-gray-900"
 					>
