@@ -1,10 +1,11 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { AuthActionTypes, useAuth } from 'context/auth.context';
-import useNonceHandler from './useNonceHandler';
-import useRequest from 'hooks/useRequest';
+import useRequest, { API_URL } from 'hooks/useRequest';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { useDisconnect } from 'wagmi';
+import { useDisconnect, useSignMessage } from 'wagmi';
+import { useW3auth } from '@devzstudio/w3auth-hook';
+import Config from 'lib/config';
 
 const ConnectOptionsHandler = ({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
 	return (
@@ -43,16 +44,17 @@ const ConnectOptionsHandler = ({ account, chain, openAccountModal, openChainModa
 
 				if (!account) return null;
 
-				return (
-					<>
-						<ConnectedAddress
-							chain={chain}
-							openChainModal={openChainModal}
-							openAccountModal={openAccountModal}
-							account={account}
-						/>
-					</>
-				);
+				if (account.address)
+					return (
+						<>
+							<ConnectedAddress
+								chain={chain}
+								openChainModal={openChainModal}
+								openAccountModal={openAccountModal}
+								account={account}
+							/>
+						</>
+					);
 			})()}
 		</div>
 	);
@@ -64,9 +66,42 @@ const ConnectedAddress = ({ chain, openChainModal, openAccountModal, account }) 
 	const { auth, authDispatch } = useAuth();
 	const { disconnect } = useDisconnect();
 
-	useNonceHandler({
-		account,
+	const { data, error, signMessage } = useSignMessage();
+
+	const { verifySignIn, processDisconnect } = useW3auth({
+		API_URL: API_URL,
+		wallet_address: account?.address,
+		signMessageText: Config.SignMessageText,
+		token: auth.token,
+		onLogout: () => {
+			disconnect();
+		},
+		onSignIn: (response) => {
+			if (response) {
+				authDispatch({
+					type: AuthActionTypes.SET_USER,
+					payload: response,
+				});
+			}
+		},
+		signMessage: async (message) => {
+			await signMessage({ message });
+		},
 	});
+
+	useEffect(() => {
+		if (data) {
+			verifySignIn({
+				signature: data,
+			});
+		}
+	}, [data]);
+
+	useEffect(() => {
+		if (error) {
+			processDisconnect();
+		}
+	}, [error]);
 
 	useEffect(() => {
 		if (response) {

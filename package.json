@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@devzstudio/w3auth-hook": "^0.0.4",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@gokiprotocol/walletkit": "^1.7.3",
@@ -20,7 +21,7 @@
     "@solana/web3.js": "^1.50.1",
     "autoprefixer": "^10.4.7",
     "ethers": "^5.6.9",
-    "next": "12.2.3",
+    "next": "^12.2.4",
     "nextjs-cors": "^2.1.1",
     "postcss": "^8.4.14",
     "rainbowkit": "^0.0.1",

@@ -1,20 +1,42 @@
+import { useW3auth } from '@devzstudio/w3auth-hook';
 import { ConnectWalletButton } from '@gokiprotocol/walletkit';
 import { useConnectedWallet, useSolana } from '@saberhq/use-solana';
+import { AuthActionTypes, useAuth } from 'context/auth.context';
 import Logo from 'data/logo';
 import { API_URL } from 'hooks/useRequest';
-import w3auth from 'hooks/useW3auth';
-import { useCallback, useEffect, useState } from 'react';
-import useNonceHandler from './useNonceHandler';
+import { useW3authAPI } from '@devzstudio/w3auth-hook';
+import Config from 'lib/config';
+
+import { useEffect } from 'react';
 
 const Connect = () => {
-	const { verifySign, getNonce, logout, refresh } = w3auth(API_URL);
+	const { verifySign, getNonce, logout, refresh } = useW3authAPI(API_URL);
+	const { walletProviderInfo, disconnect, providerMut, network, setNetwork } = useSolana();
+
+	const { auth, authDispatch } = useAuth();
 
 	const sol = useSolana();
 	const wallet = useConnectedWallet();
 
-	const { processDisconnect } = useNonceHandler({
-		account: {
-			address: wallet?.publicKey?.toString(),
+	const { verifySignIn, processDisconnect } = useW3auth({
+		API_URL: API_URL,
+		wallet_address: wallet?.publicKey?.toString(),
+		signMessageText: Config.SignMessageText,
+		token: auth.token,
+		onLogout: () => {
+			disconnect();
+		},
+		onSignIn: (response) => {
+			if (response) {
+				authDispatch({
+					type: AuthActionTypes.SET_USER,
+					payload: response,
+				});
+			}
+		},
+		signMessage: async (message) => {
+			// Solana function to sign message
+			// await signMessage({ message });
 		},
 	});
 

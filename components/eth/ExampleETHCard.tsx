@@ -1,4 +1,4 @@
-import RabbitKitConnect from 'components/eth/Rainbowkit';
+import RabbitKitConnect from 'components/eth/RainbotKit';
 import { useAuth } from 'context/auth.context';
 
 const ExampleETHCard = () => {
